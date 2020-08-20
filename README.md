@@ -1,4 +1,4 @@
-# BassClefStudio.NET.Cryptography
+# Cryptography-Experiments
 This is a basic library where I'm experimenting with various forms of cryptographic functions, secret sharing systems, and the like. It's designed to be simple and easy to try out new things.
 
 ***THIS IS A PROJECT FOR EDUCATION/EXPERIMENTAL PURPOSES ONLY!*** I am no security expert, and do not reccommend using any of these libraries in production as-is.
