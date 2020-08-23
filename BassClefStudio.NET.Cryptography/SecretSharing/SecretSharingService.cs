@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
+using BassClefStudio.NET.Core;
 
 namespace BassClefStudio.NET.Cryptography.SecretSharing
 {
@@ -68,49 +69,6 @@ namespace BassClefStudio.NET.Cryptography.SecretSharing
         {
             var poly = new LagrangePolynomial<BigInteger>(ShareInfo.PolynomialInfo, points.ToArray());
             return poly.EvaluateAt(0).Output.ToByteArray();
-        }
-    }
-
-    static class ListExtensions
-    {
-        public static IEnumerable<IEnumerable<T>> ChunkBy<T>(this IEnumerable<T> source, int chunkSize)
-        {
-            return source
-                .Select((x, i) => new { Index = i, Value = x })
-                .GroupBy(x => x.Index / chunkSize)
-                .Select(x => x.Select(v => v.Value));
-        }
-
-        public static IEnumerable<IEnumerable<T>> Transpose<T>(this IEnumerable<IEnumerable<T>> source)
-        {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
-            
-            if(!source.Any())
-            {
-                return Enumerable.Empty<IEnumerable<T>>();
-            }
-
-            return TransposeCore(source);
-        }
-
-        static IEnumerable<IEnumerable<T>> TransposeCore<T>(this IEnumerable<IEnumerable<T>> source)
-        {
-            var enumerators = source.Select(x => x.GetEnumerator()).ToArray();
-            try
-            {
-                while (enumerators.All(x => x.MoveNext()))
-                {
-                    yield return enumerators.Select(x => x.Current).ToArray();
-                }
-            }
-            finally
-            {
-                foreach (var enumerator in enumerators)
-                    enumerator.Dispose();
-            }
         }
     }
 }
